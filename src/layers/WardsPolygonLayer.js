@@ -23,7 +23,7 @@ export const WardsPolygonLayer = ({data})=>{
         } else if (num>=12){
             return '#9ED1BB';
         } else if (num>=6){
-            return '#DOE8B9'
+            return '#D0E8B9'
         } else if (num>=1){
             return '#FFFFDD';
         } else {
@@ -41,11 +41,11 @@ export const WardsPolygonLayer = ({data})=>{
             return (<Polygon
                 key = {idx}
                 pathOptions={{
-                    fillColor: `${dataValue(parseFloat(cdata?.destinations[ward.properties.WARD_NO-1][ward.properties.WARD_NO].time)/60.0)}`,
+                    fillColor: `${dataValue(parseFloat(cdata?.destinations[ward.properties.WARD_NO-1][ward.properties.WARD_NO.toString()].time)/60.0)}`,
                     fillOpacity: 0.9,
                     weight: 1,
-                    color: `${ward.properties.WARD_NO === wid.toString()?'#000':dataValue(parseFloat(cdata.destinations[ward.properties.WARD_NO-1][ward.properties.WARD_NO].time)/60.0)}`,
-                    dashArray: `${ward.properties.WARD_NO === wid.toString()?4:0}`
+                    color: `${ward.properties.WARD_NO === wid?'#000':dataValue(parseFloat(cdata.destinations[ward.properties.WARD_NO-1][ward.properties.WARD_NO].time)/60.0)}`,
+                    dashArray: `${ward.properties.WARD_NO === wid?4:0}`
                 }}
                 positions = {coordinates}
                 eventHandlers = {{
