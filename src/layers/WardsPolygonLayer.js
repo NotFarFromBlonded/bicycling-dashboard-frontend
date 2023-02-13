@@ -1,5 +1,6 @@
 import { Polygon, Popup} from "react-leaflet";
 import { CyclingState } from "../Context";
+import { wardsWithoutRoutes } from "../data/wards_without_routes";
 
 export const WardsPolygonLayer = ({data})=>{
     const {wid, setWid, cdata} = CyclingState();
@@ -25,9 +26,9 @@ export const WardsPolygonLayer = ({data})=>{
         } else if (num>=6){
             return '#D0E8B9'
         } else if (num>=1){
-            return '#FFFFDD';
+            return '#FFE5B4';
         } else {
-            return '#FFFFFF';
+            return '#f5f5f5';
         }
 
     }
@@ -41,10 +42,10 @@ export const WardsPolygonLayer = ({data})=>{
             return (<Polygon
                 key = {idx}
                 pathOptions={{
-                    fillColor: `${dataValue(parseFloat(cdata?.destinations[ward.properties.WARD_NO-1][ward.properties.WARD_NO].time)/60.0)}`,
+                    fillColor: `${wardsWithoutRoutes.includes(parseInt(ward.properties.WARD_NO))?"#808080":dataValue(parseFloat(cdata?.destinations[ward.properties.WARD_NO-1][ward.properties.WARD_NO].time)/60.0)}`,
                     fillOpacity: 0.9,
                     weight: 1,
-                    color: `${ward.properties.WARD_NO === wid.toString()?'#000':dataValue(parseFloat(cdata.destinations[ward.properties.WARD_NO-1][ward.properties.WARD_NO].time)/60.0)}`,
+                    color: `${ward.properties.WARD_NO === wid.toString()?'#000':wardsWithoutRoutes.includes(parseInt(ward.properties.WARD_NO))?"#808080":dataValue(parseFloat(cdata.destinations[ward.properties.WARD_NO-1][ward.properties.WARD_NO].time)/60.0)}`,
                     dashArray: `${ward.properties.WARD_NO === wid.toString()?4:0}`
                 }}
                 positions = {coordinates}
@@ -68,8 +69,9 @@ export const WardsPolygonLayer = ({data})=>{
                         const layer = e.target
                         layer.setStyle({
                             dashArray:`${ward.properties.WARD_NO!==wid.toString()?0:4}`,
-                            color:`${ward.properties.WARD_NO!==wid.toString()?dataValue(parseFloat(cdata.destinations[ward.properties.WARD_NO-1][ward.properties.WARD_NO].time)/60.0):'#000'}`
+                            color:`${ward.properties.WARD_NO!==wid.toString()?wardsWithoutRoutes.includes(parseInt(ward.properties.WARD_NO))?"#808080":dataValue(parseFloat(cdata.destinations[ward.properties.WARD_NO-1][ward.properties.WARD_NO].time)/60.0):'#000'}`
                         })
+
                         e.target.closePopup();
                     }
                 }}

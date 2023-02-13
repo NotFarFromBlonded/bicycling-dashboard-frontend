@@ -4,6 +4,7 @@ const Cycling = createContext();
 const CyclingContext = ({children}) =>{
     const [wid, setWid] = useState(1);
     const [cdata, setcdata] = useState([cycleData[0]])
+    
     useEffect(()=>{
         setcdata(cycleData.find((i)=>i.origin_id === wid.toString()))
     }, [wid])
